@@ -1,0 +1,9 @@
+{
+  "name": "totallynot",
+  "version": "1.0.0",
+  "description": "A Markov chain Discord bot.",
+  "main": "index.js",
+  "repository": "https://github.com/drvan/totallynot",
+  "author": "Ryan Van Antwerp <rvanantwerp@gmail.com>",
+  "license": "MIT"
+}
