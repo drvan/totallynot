@@ -2,8 +2,34 @@
   "name": "totallynot",
   "version": "1.0.0",
   "description": "A Markov chain Discord bot.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/drvan/totallynot",
   "author": "Ryan Van Antwerp <rvanantwerp@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/jest": "^23.3.10",
+    "@types/lodash": "^4.14.119",
+    "@types/natural": "^0.2.33",
+    "@types/pino": "^5.8.3",
+    "@types/weighted": "0.0.5",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.2.0",
+    "lodash": "^4.17.11",
+    "natural": "^0.6.2",
+    "pino": "^5.10.1",
+    "weighted": "^0.3.0"
+  }
 }
