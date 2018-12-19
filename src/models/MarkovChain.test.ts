@@ -1,4 +1,5 @@
-import { MemoryMarkovChain } from "./MemoryMarkovChain";
+import { MarkovChain } from "./MarkovChain";
+import { MemoryTrainingStore } from "./MemoryTrainingStore";
 
 // Generated via https://jsipsum.lunarlogic.io/
 const sampleMessages = [
@@ -15,11 +16,11 @@ const sampleMessages = [
 ];
 
 test("training MemoryMarkovChain", async () => {
-  const mmc = new MemoryMarkovChain();
+  const mmc = new MarkovChain(new MemoryTrainingStore());
   sampleMessages.map(async (message) => {
-    await mmc.train("user", message);
+    await mmc.train("user", message, 2);
   });
 
-  await mmc.generate("user", []);
+  const res = await mmc.generate("user", [], 2);
   // Passes if no error thrown.
 });
