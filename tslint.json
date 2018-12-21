@@ -6,7 +6,8 @@
     "jsRules": {},
     "rules": {
       "interface-name" : [true, "never-prefix"],
-      "object-literal-shorthand": [true, "never"]
+      "object-literal-shorthand": [true, "never"],
+      "no-shadowed-variable": false
     },
     "rulesDirectory": []
 }

@@ -3,8 +3,16 @@ import { Edge, TrainingStore } from "./TrainingStore";
 
 export class MemoryTrainingStore implements TrainingStore {
   private edges: Edge[] = [];
+  private latestSnowflake: string = "000000000000000000";
 
-  public upsertEdge(entity: string, gram: string[], starter: boolean, ender: boolean): Promise<void> {
+  public getLatestSnowflake(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return resolve(this.latestSnowflake);
+    });
+  }
+
+  public upsertEdge(snowflake: string, entity: string, gram: string[],
+                    starter: boolean, ender: boolean): Promise<void> {
     return new Promise((resolve, reject) => {
       const order = gram.length;
       const i = this.edges.findIndex( (edge) => {
@@ -27,7 +35,8 @@ export class MemoryTrainingStore implements TrainingStore {
       } else {
         this.edges[i].count++;
       }
-      resolve();
+      this.latestSnowflake = snowflake;
+      return resolve();
     });
   }
 
@@ -38,7 +47,7 @@ export class MemoryTrainingStore implements TrainingStore {
                 (edge.ender === false) &&
                 (edge.entity === entity));
       });
-      resolve(starters);
+      return resolve(starters);
     });
   }
 
@@ -48,7 +57,7 @@ export class MemoryTrainingStore implements TrainingStore {
         return ((_.isEqual(edge.sequence, sequence)) &&
                 (edge.entity === entity));
       });
-      resolve(nexts);
+      return resolve(nexts);
     });
   }
 }

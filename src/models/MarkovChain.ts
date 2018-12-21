@@ -10,12 +10,12 @@ export class MarkovChain {
   constructor(private readonly store: TrainingStore) {
   }
 
-  public train(entity: string, message: string, order: number): Promise<void> {
+  public train(snowflake: string, entity: string, message: string, order: number): Promise<void> {
     return new Promise(async (resolve, reject) => {
       const grams = this.ng.ngrams(this.rt.tokenize(message), order);
       if (grams.length === 1) {
         try {
-          await this.store.upsertEdge(entity, grams[0], true, true);
+          await this.store.upsertEdge(snowflake, entity, grams[0], true, true);
         } catch (e) {
           return reject(e);
         }
@@ -24,15 +24,15 @@ export class MarkovChain {
           try {
             switch (index) {
               case 0: {
-                await this.store.upsertEdge(entity, gram, true, false);
+                await this.store.upsertEdge(snowflake, entity, gram, true, false);
                 break;
               }
               case grams.length - 1: {
-                await this.store.upsertEdge(entity, gram, false, true);
+                await this.store.upsertEdge(snowflake, entity, gram, false, true);
                 break;
               }
               default: {
-                await this.store.upsertEdge(entity, gram, false, false);
+                await this.store.upsertEdge(snowflake, entity, gram, false, false);
                 break;
               }
             }

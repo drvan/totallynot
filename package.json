@@ -17,6 +17,7 @@
     "@types/lodash": "^4.14.119",
     "@types/natural": "^0.2.33",
     "@types/pino": "^5.8.3",
+    "@types/sqlite3": "^3.1.3",
     "@types/weighted": "0.0.5",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
@@ -30,6 +31,7 @@
     "lodash": "^4.17.11",
     "natural": "^0.6.2",
     "pino": "^5.10.1",
+    "sqlite3": "^4.0.4",
     "weighted": "^0.3.0"
   }
 }

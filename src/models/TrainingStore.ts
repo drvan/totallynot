@@ -1,5 +1,7 @@
 export interface TrainingStore {
-  upsertEdge(entity: string, gram: string[], starter: boolean, ender: boolean): Promise<void>;
+  getLatestSnowflake(): Promise<string>;
+  upsertEdge(snowflake: string, entity: string, gram: string[],
+             starter: boolean, ender: boolean): Promise<void>;
   getStarters(entity: string): Promise<Edge[]>;
   getNexts(entity: string, sequence: string[]): Promise<Edge[]>;
 }

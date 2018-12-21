@@ -2,13 +2,15 @@ import Discord from "discord.js";
 import dotenv from "dotenv";
 import pino from "pino";
 import { MarkovChain } from "./models/MarkovChain";
-import { MemoryTrainingStore } from "./models/MemoryTrainingStore";
+import { SqliteTrainingStore } from "./models/SqliteTrainingStore";
 
-function main() {
+async function main() {
   dotenv.config();
   const logger = pino();
   const client = new Discord.Client();
-  const mmc = new MarkovChain(new MemoryTrainingStore());
+  const ts = new SqliteTrainingStore("totallynot.db");
+  await ts.init();
+  const mmc = new MarkovChain(ts);
 
   client.once("ready", () => {
     logger.info("Ready!");
@@ -35,7 +37,7 @@ function main() {
         message.channel.send("Error: You must mention a valid user.");
       }
     } else {
-      mmc.train(message.author.id, message.content, Number(process.env.MARKOV_CHAIN_ORDER));
+      mmc.train(message.id, message.author.id, message.content, Number(process.env.MARKOV_CHAIN_ORDER));
     }
   });
 

@@ -1,5 +1,6 @@
 import { MarkovChain } from "./MarkovChain";
-import { MemoryTrainingStore } from "./MemoryTrainingStore";
+// import { MemoryTrainingStore } from "./MemoryTrainingStore";
+import { SqliteTrainingStore } from "./SqliteTrainingStore";
 
 // Generated via https://jsipsum.lunarlogic.io/
 const sampleMessages = [
@@ -16,11 +17,15 @@ const sampleMessages = [
 ];
 
 test("training MemoryMarkovChain", async () => {
-  const mmc = new MarkovChain(new MemoryTrainingStore());
+  expect.assertions(1);
+  const ts = new SqliteTrainingStore(":memory:");
+  await ts.init();
+  const mmc = new MarkovChain(ts);
   sampleMessages.map(async (message) => {
-    await mmc.train("user", message, 2);
+    await mmc.train("000000000000000001", "user", message, 2);
   });
 
-  const res = await mmc.generate("user", [], 2);
-  // Passes if no error thrown.
+  await mmc.generate("user", [], 2);
+  const snowflake = await ts.getLatestSnowflake();
+  expect(snowflake).toEqual("000000000000000001");
 });
